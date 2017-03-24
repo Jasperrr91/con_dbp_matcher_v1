@@ -1,11 +1,12 @@
-import json
-import sys
-import operator
 import functools
-import itertools
+import json
+import operator
+import os
 from collections import defaultdict
+
 from nltk.corpus import stopwords
-from lbl_uri_indexer import knowledge
+
+from .lbl_uri_indexer import knowledge
 
 #text = "is it correct to say that alan turing and noam chomsky are the giants"
 #text = sys.argv[1:]
@@ -22,7 +23,10 @@ def clean_input(text):
 
 def uri_term_mapper(sent_wo_stpwrds):
     trm_uri = {}
-    lbl_uri_index = json.load(open("dbp/lbl-uri_index.json"))
+
+    this_dir, this_filename = os.path.split(__file__)
+    json_file = os.path.join(this_dir, 'dbp/lbl-uri_index.json')
+    lbl_uri_index = json.load(open(json_file))
     for term in sent_wo_stpwrds:
         uri_list_dup = []
         for enti_term, uri in lbl_uri_index.items():
@@ -78,7 +82,9 @@ def calculate_llh(ment_cnt_dbp, list_freq_corpus):
 
 
 def llh_mapping(candidates):
-    unigram_file = open('lexstat/unigrams.json')
+    this_dir, this_filename = os.path.split(__file__)
+    json_file = os.path.join(this_dir, 'lexstat/unigrams.json')
+    unigram_file = open(json_file)
     unigram_dict = json.load(unigram_file)
     concept = {}
     for uri, multiword in candidates.items():

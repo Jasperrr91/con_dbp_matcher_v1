@@ -40,5 +40,5 @@ decision_index = llh_mapping(candidates)
 print("And the winner is.......")
 #Select the most likely entity!
 the_winner = select_winning_entity(decision_index)
-for x,y in the_winner.items():
-    print(x,y)
+for attr,info in the_winner.items():
+    print(attr,info)

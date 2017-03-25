@@ -8,7 +8,7 @@ def create_knowledge_base(list_of_json_files):
     this_dir, this_filename = os.path.split(__file__)
     for json_file in list_of_json_files:
         json_file = os.path.join(this_dir, json_file)
-        jsonfile = open(json_file)
+        jsonfile = open(json_file, encoding='utf8')
         json_dict = json.load(jsonfile)
         list_of_dict.append(json_dict)
     return list_of_dict

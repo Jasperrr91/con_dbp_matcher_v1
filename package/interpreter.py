@@ -113,7 +113,10 @@ def llh_mapping(candidates):
 
 def select_winning_entity(decision_index):
     winning_instance = {}
-    target_key = max(decision_index, key=lambda dbp_instance: decision_index[dbp_instance]['LLH'])
+    try:
+        target_key = max(decision_index, key=lambda dbp_instance: decision_index[dbp_instance]['LLH'])
+    except ValueError:
+        return None;
     winning_instance['winner'] = target_key
     for dbp_inst_key,inst_inform in decision_index.items():
         if target_key == dbp_inst_key:

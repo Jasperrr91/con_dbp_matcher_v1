@@ -27,13 +27,20 @@ def uri_term_mapper(sent_wo_stpwrds):
     this_dir, this_filename = os.path.split(__file__)
     json_file = os.path.join(this_dir, 'dbp/lbl-uri_index.json')
     lbl_uri_index = json.load(open(json_file))
+
+    uri_list_dup = {}
     for term in sent_wo_stpwrds:
-        uri_list_dup = []
-        for enti_term, uri in lbl_uri_index.items():
+        uri_list_dup[term] = []
+
+    for enti_term, uri in lbl_uri_index.items():
+        for term in sent_wo_stpwrds:
             if term in enti_term:
-                uri_list_dup.append(uri)
-                uri_list = list(set(uri_list_dup))
-                trm_uri[term] = uri_list
+                uri_list_dup[term].append(uri)
+
+    for term in sent_wo_stpwrds:
+        uri_list = list(set(uri_list_dup[term]))
+        trm_uri[term] = uri_list
+
     listoftuples_uri_term = []
     uri_term_dict = defaultdict(list)
     for term, urilist in trm_uri.items():

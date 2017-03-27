@@ -33,10 +33,21 @@ def uri_term_mapper(sent_wo_stpwrds):
     for term in sent_wo_stpwrds:
         uri_list_dup[term] = []
 
+#    for enti_term, uri in lbl_uri_index.items():
+#        for term in sent_wo_stpwrds:
+#            if (term == enti_term) == True:
+#                uri_list_dup[term].append(uri)
+#            if (term == enti_term) == False:
+#                if (" "+term+" " in enti_term) == True:
+#                    uri_list_dup[term].append(uri)
+
     for enti_term, uri in lbl_uri_index.items():
         for term in sent_wo_stpwrds:
-            if term in enti_term:
+            if (term == enti_term) == True:
                 uri_list_dup[term].append(uri)
+            if (term == enti_term) == False:
+                if (term in enti_term) == True:
+                    uri_list_dup[term].append(uri)
 
     for term in sent_wo_stpwrds:
         uri_list = list(set(uri_list_dup[term]))
